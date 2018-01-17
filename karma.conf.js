@@ -28,7 +28,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadlessLocal'],
     customLaunchers: {
       ChromeHeadlessLocal: {
         base: 'ChromeHeadless',
@@ -41,7 +41,7 @@ module.exports = function (config) {
         base: 'SauceLabs',
         browserName: 'chrome',
         version: 'latest'
-      },
+      }
     },
     browserConsoleLogOptions: {
       terminal: true,
@@ -61,10 +61,12 @@ module.exports = function (config) {
 
   if (process.env['TRAVIS']) {
 
+
+    configuration.reporters.push('saucelabs');
     configuration.sauceLabs.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
     configuration.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_ID;
 
-    configuration.browsers = ['ChromeHeadlessCI'];
+    configuration.browsers = ['ChromeHeadlessLocal'];
   }
 
   console.log(configuration);
